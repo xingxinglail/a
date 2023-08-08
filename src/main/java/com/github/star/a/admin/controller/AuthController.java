@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController("AdminAuthController")
 @RequestMapping("/admin/auth")
 public class AuthController {
@@ -22,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/no-token/sign-in")
-    public SignVO signIn(@RequestBody SignInDTO signInDto) {
+    public SignVO signIn(@RequestBody @Valid SignInDTO signInDto) {
         return authService.signIn(signInDto.getUsername(), signInDto.getPassword());
     }
 
