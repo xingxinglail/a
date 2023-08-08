@@ -7,7 +7,8 @@ CREATE TABLE t_admin_user
     is_deleted  tinyint(2) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除标记（0:可用 1:已删除）',
     create_time timestamp           NOT NULL DEFAULT now() COMMENT '创建时间',
     update_time timestamp           NOT NULL DEFAULT now() ON UPDATE now() COMMENT '更新时间',
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE KEY `username_is_deleted` (`username`, `is_deleted`)
 ) COMMENT '管理员用户表';
 
 INSERT INTO t_admin_user(id, username, password, nickname)

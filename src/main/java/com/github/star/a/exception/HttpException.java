@@ -3,13 +3,14 @@ package com.github.star.a.exception;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.http.HttpStatus;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 public class HttpException extends RuntimeException {
 
-    protected Integer code;
+    protected HttpStatus code = HttpStatus.UNPROCESSABLE_ENTITY;
 
     protected String message;
 
@@ -18,7 +19,7 @@ public class HttpException extends RuntimeException {
         this.message = message;
     }
 
-    public HttpException(Integer code, String message) {
+    public HttpException(HttpStatus code, String message) {
         super(message);
         this.code = code;
         this.message = message;
@@ -29,7 +30,7 @@ public class HttpException extends RuntimeException {
         this.message = message;
     }
 
-    public HttpException(Integer code, String message, Throwable throwable) {
+    public HttpException(HttpStatus code, String message, Throwable throwable) {
         super(message, throwable);
         this.code = code;
         this.message = message;

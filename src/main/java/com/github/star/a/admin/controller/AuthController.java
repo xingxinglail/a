@@ -3,7 +3,7 @@ package com.github.star.a.admin.controller;
 import com.github.star.a.admin.dto.SignInDTO;
 import com.github.star.a.admin.service.AuthService;
 import com.github.star.a.admin.vo.SignVO;
-import com.github.star.a.common.ResultResponse;
+import com.github.star.a.util.NamedThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +21,14 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/sign-in")
+    @PostMapping("/no-token/sign-in")
     public SignVO signIn(@RequestBody SignInDTO signInDto) {
         return authService.signIn(signInDto.getUsername(), signInDto.getPassword());
+    }
+
+    @PostMapping("/test")
+    public String test() {
+        System.out.println(NamedThreadLocalUtil.get());
+        return "ok";
     }
 }

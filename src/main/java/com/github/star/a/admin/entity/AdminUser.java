@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class AdminUser {
 
-    Long id;
+    Integer id;
 
     String username;
 

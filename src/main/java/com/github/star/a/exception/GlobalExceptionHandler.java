@@ -2,36 +2,34 @@ package com.github.star.a.exception;
 
 import com.github.star.a.common.ResultResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(value = HttpException.class)
     @ResponseBody
-    public ResultResponse bizExceptionHandler(HttpServletRequest req, HttpException e) {
-        Integer code = e.getCode();
-        return ResultResponse.fail(code != null ? code : -1, e.getMessage(), null);
+    public ResponseEntity<?> bizExceptionHandler(HttpServletRequest req, HttpException e) {
+        Map<String, String> map = new HashMap<>();
+        map.put("message", e.getMessage());
+        e.printStackTrace();
+        return new ResponseEntity<>(map, e.getCode());
     }
 
-    @ExceptionHandler(value = NullPointerException.class)
+    @ExceptionHandler(value = {NullPointerException.class, Exception.class})
     @ResponseBody
-    public ResultResponse exceptionHandler(HttpServletRequest req, NullPointerException e) {
+    public ResponseEntity<?> exceptionHandler(HttpServletRequest req, Exception e) {
+        Map<String, String> map = new HashMap<>();
+        map.put("message", e.toString());
         e.printStackTrace();
-        return ResultResponse.fail("空指针异常");
-    }
-
-    @ExceptionHandler(value = Exception.class)
-    @ResponseBody
-    public ResultResponse exceptionHandler(HttpServletRequest req, Exception e) {
-        e.printStackTrace();
-        return ResultResponse.fail("系统错误");
+        return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

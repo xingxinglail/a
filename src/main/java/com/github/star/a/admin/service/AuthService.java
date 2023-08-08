@@ -5,6 +5,7 @@ import com.github.star.a.admin.entity.AdminUser;
 import com.github.star.a.admin.vo.SignVO;
 import com.github.star.a.exception.HttpException;
 import com.github.star.a.util.AESUtil;
+import com.github.star.a.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,8 @@ public class AuthService {
         adminUser.setPassword(AESUtil.encode(password));
         AdminUser savedAdminUser = adminUserDao.findUserByUsernameAndPassword(adminUser);
         if (savedAdminUser != null) {
-            return SignVO.builder().nickname(savedAdminUser.getNickname()).token("").build();
+            String token = JWTUtil.generateToken(savedAdminUser.getId(), JWTUtil.TypeEnum.Admin);
+            return SignVO.builder().nickname(savedAdminUser.getNickname()).token(token).build();
         }
         throw new HttpException("用户名或密码错误");
     }
