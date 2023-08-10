@@ -3,6 +3,7 @@ package com.github.star.a.exception;
 import com.github.star.a.common.ResultResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,15 @@ public class GlobalExceptionHandler {
         map.put("message", e.getMessage());
         e.printStackTrace();
         return new ResponseEntity<>(map, e.getCode());
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    public ResponseEntity<?> httpRequestMethodNotSupportedException(HttpServletRequest req, HttpException e) {
+        Map<String, String> map = new HashMap<>();
+        map.put("message", e.getMessage());
+        e.printStackTrace();
+        return new ResponseEntity<>(map, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(value = {NullPointerException.class, Exception.class})

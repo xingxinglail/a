@@ -1,7 +1,9 @@
 package com.github.star.a.admin.controller;
 
+import com.github.star.a.admin.dto.CreateShopAdminUserDTO;
 import com.github.star.a.admin.dto.CreateShopDTO;
 import com.github.star.a.admin.service.ShopManageService;
+import com.github.star.a.admin.vo.ShopDetailVO;
 import com.github.star.a.admin.vo.ShopVO;
 import com.github.star.a.exception.HttpException;
 import com.mysql.cj.util.StringUtils;
@@ -41,5 +43,15 @@ public class ShopManageController {
             throw new HttpException("无效的店铺id");
         }
         shopManageService.removeShopById(id);
+    }
+
+    @PostMapping("/user")
+    public void createShopAdminUser(@RequestBody @Valid CreateShopAdminUserDTO createShopAdminUserDTO) {
+        shopManageService.createShopAdminUser(createShopAdminUserDTO);
+    }
+
+    @GetMapping("{id}")
+    public ShopDetailVO findShopDetailById(@PathVariable Integer id) {
+        return shopManageService.findShopDetailById(id);
     }
 }

@@ -15,7 +15,7 @@ public class AdminUser {
 
     String nickname;
 
-    Long isDeleted;
+    Integer isDeleted;
 
     Date createTime;
 

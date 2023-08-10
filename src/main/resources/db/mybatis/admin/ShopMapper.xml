@@ -44,4 +44,18 @@
         WHERE id = #{id}
           AND is_deleted = 0
     </update>
+
+    <insert id="createShopAdminUser" parameterType="com.github.star.a.admin.entity.ShopAdminUser">
+        INSERT INTO t_shop_admin_user (shop_id, username, password, nickname, create_by)
+        VALUES (#{shopId}, #{username}, #{password}, #{nickname}, #{createBy})
+    </insert>
+
+    <select id="findAdminUserByShopId" parameterType="java.lang.Integer"
+            resultType="com.github.star.a.admin.entity.ShopAdminUser">
+        SELECT id, username, nickname, create_time
+        FROM t_shop_admin_user
+        WHERE shop_id = #{id}
+          AND is_deleted = 0
+        ORDER BY create_time DESC
+    </select>
 </mapper>

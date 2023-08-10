@@ -12,3 +12,6 @@ CREATE TABLE t_shop
     PRIMARY KEY (id),
     UNIQUE KEY `name_is_deleted` (`name`, `is_deleted`)
 ) COMMENT '店铺表';
+
+INSERT INTO t_shop(id, name, `desc`, logo_url, create_by)
+values (1, '星星来了', '本店铺专卖各种电子产品，欢迎光临！', 'https://baidu.com', 1);
