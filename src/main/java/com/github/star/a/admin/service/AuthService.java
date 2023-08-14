@@ -2,7 +2,7 @@ package com.github.star.a.admin.service;
 
 import com.github.star.a.admin.dao.AdminUserDao;
 import com.github.star.a.admin.entity.AdminUser;
-import com.github.star.a.admin.vo.SignVO;
+import com.github.star.a.vo.SignVO;
 import com.github.star.a.exception.HttpException;
 import com.github.star.a.util.AESUtil;
 import com.github.star.a.util.JWTUtil;
@@ -25,7 +25,7 @@ public class AuthService {
         adminUser.setPassword(AESUtil.encode(password));
         AdminUser savedAdminUser = adminUserDao.findUserByUsernameAndPassword(adminUser);
         if (savedAdminUser != null) {
-            String token = JWTUtil.generateToken(savedAdminUser.getId(), JWTUtil.TypeEnum.Admin);
+            String token = JWTUtil.generateToken(savedAdminUser.getId(), null, JWTUtil.TypeEnum.Admin);
             return SignVO.builder().nickname(savedAdminUser.getNickname()).token(token).build();
         }
         throw new HttpException("用户名或密码错误");

@@ -30,7 +30,7 @@ public class ShopManageService {
     }
 
     public void createShop(CreateShopDTO createShopDTO) {
-        Integer createById = NamedThreadLocalUtil.get();
+        Integer createById = NamedThreadLocalUtil.getUserId();
         Shop shop = shopDao.findShopByName(createShopDTO.getName());
         if (shop != null) {
             throw new HttpException("店铺已存在");
@@ -84,7 +84,7 @@ public class ShopManageService {
                 .username(createShopAdminUserDTO.getUsername())
                 .password(AESUtil.encode("123456"))
                 .nickname(createShopAdminUserDTO.getNickname())
-                .createBy(NamedThreadLocalUtil.get())
+                .createBy(NamedThreadLocalUtil.getUserId())
                 .build();
         try {
             shopDao.createShopAdminUser(shopAdminUser);

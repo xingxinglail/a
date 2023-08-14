@@ -1,4 +1,4 @@
-package com.github.star.a.admin.vo;
+package com.github.star.a.vo;
 
 import lombok.Builder;
 import lombok.Data;

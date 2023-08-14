@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.KeyPair;
 import java.util.*;
 
 public class JWTUtil {
@@ -38,10 +37,11 @@ public class JWTUtil {
         return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
     }
 
-    public static String generateToken(Integer userId, TypeEnum type) {
+    public static String generateToken(Integer userId, Integer shopId, TypeEnum type) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("type", type.getType());
         claims.put("userId", userId);
+        claims.put("shopId", shopId);
         return Jwts.builder()
                 .setIssuer("a")
                 .setSubject("hhas")
@@ -52,28 +52,19 @@ public class JWTUtil {
                 .compact();
     }
 
-    private static Claims getTokenBody(String token) {
+    public static Claims getTokenBody(String token) {
         return Jwts.parser()
                 .setSigningKey(generalKey())
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    public static Integer getUserId(String token) {
-        return Integer.valueOf(getTokenBody(token).get("userId").toString());
-    }
-
-    public static TypeEnum getType(String token) {
-        return TypeEnum.valueOf(getTokenBody(token).get("type").toString());
-    }
-
     public static void main(String[] args) throws InterruptedException {
-        String token = generateToken(1, TypeEnum.Admin);
+        String token = generateToken(1, null, TypeEnum.Admin);
         // Thread.sleep(1200);
-        String token2 = generateToken(1, TypeEnum.ShopAdmin);
+        String token2 = generateToken(1, null, TypeEnum.ShopAdmin);
         System.out.println(token);
         System.out.println(token2);
-        System.out.println(getUserId(token));
         System.out.println("getTokenBody(token).getSubject()");
         System.out.println(getTokenBody(token).getSubject());
     }

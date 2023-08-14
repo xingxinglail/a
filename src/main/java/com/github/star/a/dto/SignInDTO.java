@@ -1,4 +1,4 @@
-package com.github.star.a.admin.dto;
+package com.github.star.a.dto;
 
 import lombok.Data;
 

@@ -9,5 +9,6 @@
     <mappers>
         <mapper resource="db/mybatis/admin/AdminUserMapper.xml"/>
         <mapper resource="db/mybatis/admin/ShopMapper.xml"/>
+        <mapper resource="db/mybatis/shop-admin/ShopAdminUserMapper.xml"/>
     </mappers>
 </configuration>

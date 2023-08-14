@@ -1,7 +1,7 @@
-package com.github.star.a.admin.controller;
+package com.github.star.a.shopadmin.controller;
 
 import com.github.star.a.dto.SignInDTO;
-import com.github.star.a.admin.service.AuthService;
+import com.github.star.a.shopadmin.service.AuthService;
 import com.github.star.a.vo.SignVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@RestController("AdminAuthController")
-@RequestMapping("/admin/auth")
+@RestController("ShopAdminAuthController")
+@RequestMapping("/shop-admin/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -24,6 +24,7 @@ public class AuthController {
 
     @PostMapping("/no-token/sign-in")
     public SignVO signIn(@RequestBody @Valid SignInDTO signInDto) {
-        return authService.signIn(signInDto.getUsername(), signInDto.getPassword());
+        return authService.signIn(signInDto);
     }
+
 }

@@ -1,16 +1,31 @@
 package com.github.star.a.util;
 
+import lombok.Data;
 import org.springframework.core.NamedThreadLocal;
 
 public class NamedThreadLocalUtil {
 
-    static private final NamedThreadLocal<Integer> threadLocal = new NamedThreadLocal<>("authThreadLocal");
+    @lombok.Data
+    private static class Data {
+        private Integer userId;
 
-    static public void set(Integer value) {
-        threadLocal.set(value);
+        private Integer shopId;
     }
 
-    static public Integer get() {
-        return threadLocal.get();
+    static private final NamedThreadLocal<Data> threadLocal = new NamedThreadLocal<>("authThreadLocal");
+
+    static public void set(Integer userId, Integer shopId) {
+        Data data = new Data();
+        data.setUserId(userId);
+        data.setShopId(shopId);
+        threadLocal.set(data);
+    }
+
+    static public Integer getUserId() {
+        return threadLocal.get().getUserId();
+    }
+
+    static public Integer getShopId() {
+        return threadLocal.get().getShopId();
     }
 }
