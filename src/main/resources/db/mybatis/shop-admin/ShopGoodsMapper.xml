@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.star.a.shopadmin.dao.mapper.GoodsMapper">
+
+    <select id="getGoodsList" resultType="com.github.star.a.shopadmin.vo.GoodsVO">
+        SELECT goods.id as goods_id,
+        goods.name as goods_name,
+        goods.price as goods_price,
+        goods.stock as goods_stock,
+        goods.image_url as goods_image_url,
+        goods.sell_status as goods_sell_status,
+        category.id as category_id
+        FROM t_shop_goods as goods
+        INNER JOIN t_shop_category_goods as category ON goods.id = category.goods_id
+        <where>
+            <if test="goodsName != null and goodsName != ''">
+                goods.name like "%"#{goodsName}"%" AND
+            </if>
+            <if test="categoryId != null">
+                category.id = #{categoryId} AND
+            </if>
+            goods.is_deleted = 0
+        </where>
+        ORDER BY goods.create_time DESC
+    </select>
+
+</mapper>
